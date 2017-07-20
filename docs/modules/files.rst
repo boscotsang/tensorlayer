@@ -37,22 +37,35 @@ sake of cross-platform.
    load_cifar10_dataset
    load_ptb_dataset
    load_matt_mahoney_text8_dataset
-   load_imbd_dataset
+   load_imdb_dataset
    load_nietzsche_dataset
    load_wmt_en_fr_dataset
+   load_flickr25k_dataset
+   load_flickr1M_dataset
 
    save_npz
+   save_npz_dict
    load_npz
+   load_npz_dict
    assign_params
+   load_and_assign_npz
 
    save_any_to_npy
    load_npy_to_any
 
-   npz_to_W_pdf
-
+   file_exists
+   folder_exists
+   del_file
+   del_folder
+   read_file
    load_file_list
    load_folder_list
    exists_or_mkdir
+   maybe_download_and_extract
+
+   natural_keys
+
+   npz_to_W_pdf
 
 Load dataset functions
 ------------------------
@@ -75,32 +88,51 @@ Matt Mahoney's text8
 
 IMBD
 ^^^^^^^^^^^
-.. autofunction:: load_imbd_dataset
+.. autofunction:: load_imdb_dataset
 
 Nietzsche
 ^^^^^^^^^^^^^^
 .. autofunction:: load_nietzsche_dataset
 
-
 English-to-French translation data from the WMT'15 Website
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. autofunction:: load_wmt_en_fr_dataset
+
+Flickr25k
+^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: load_flickr25k_dataset
+
+Flickr1M
+^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: load_flickr1M_dataset
 
 
 Load and save network
 ----------------------
 
-Save network as .npz
-^^^^^^^^^^^^^^^^^^^^^^^^
+Save network into list (npz)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. autofunction:: save_npz
 
-Load network from .npz
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Save network into dict (npz)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: save_npz_dict
+
+Load network from save_npz
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. autofunction:: load_npz
+
+Load network from save_npz_dict
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: load_npz_dict
 
 Assign parameters to network
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 .. autofunction:: assign_params
+
+Load and assign parameters to network
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: load_and_assign_npz
 
 Load and save variables
 ------------------------
@@ -114,13 +146,28 @@ Load variables from .npy
 .. autofunction:: load_npy_to_any
 
 
-Visualizing npz file
-----------------------
-.. autofunction:: npz_to_W_pdf
+Folder/File functions
+------------------------
 
+Check file exists
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: file_exists
 
-Folder functions
-------------------
+Check folder exists
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: folder_exists
+
+Delete file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: del_file
+
+Delete folder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: del_folder
+
+Read file
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: read_file
 
 Load file list from folder
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -133,3 +180,18 @@ Load folder list from folder
 Check and Create folder
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 .. autofunction:: exists_or_mkdir
+
+Download or extract
+^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: maybe_download_and_extract
+
+Sort
+-------
+
+List of string with number in human order
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: natural_keys
+
+Visualizing npz file
+----------------------
+.. autofunction:: npz_to_W_pdf

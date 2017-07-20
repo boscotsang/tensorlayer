@@ -8,11 +8,36 @@ to visualize the model, activations etc. Here we provide more functions for data
 
 .. autosummary::
 
+   read_image
+   read_images
+   save_image
+   save_images
    W
    CNN2d
    frame
    images2d
    tsne_embedding
+
+
+Save and read images
+----------------------
+
+Read one image
+^^^^^^^^^^^^^^^^^
+.. autofunction:: read_image
+
+Read multiple images
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: read_images
+
+Save one image
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: save_image
+
+Save multiple images
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. autofunction:: save_images
+
 
 Visualize model parameters
 ------------------------------

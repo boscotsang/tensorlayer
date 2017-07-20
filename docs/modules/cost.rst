@@ -3,7 +3,7 @@ API - Cost
 
 To make TensorLayer simple, we minimize the number of cost functions as much as
 we can. So we encourage you to use TensorFlow's function.
-For example, you can implement L1, L2 and sum regularization by ``tf.nn.l2_loss``, 
+For example, you can implement L1, L2 and sum regularization by ``tf.nn.l2_loss``,
 ``tf.contrib.layers.l1_regularizer``, ``tf.contrib.layers.l2_regularizer`` and
 ``tf.contrib.layers.sum_regularizer``, see `TensorFlow API <https://www.tensorflow.org/versions/master/api_docs/index.html>`_.
 
@@ -16,13 +16,13 @@ TensorLayer provides a simple way to create you own cost function. Take a MLP be
 
 .. code-block:: python
 
-  network = tl.InputLayer(x, name='input_layer')
-  network = tl.DropoutLayer(network, keep=0.8, name='drop1')
-  network = tl.DenseLayer(network, n_units=800, act = tf.nn.relu, name='relu1')
-  network = tl.DropoutLayer(network, keep=0.5, name='drop2')
-  network = tl.DenseLayer(network, n_units=800, act = tf.nn.relu, name='relu2')
-  network = tl.DropoutLayer(network, keep=0.5, name='drop3')
-  network = tl.DenseLayer(network, n_units=10, act = tl.activation.identity, name='output_layer')
+  network = InputLayer(x, name='input')
+  network = DropoutLayer(network, keep=0.8, name='drop1')
+  network = DenseLayer(network, n_units=800, act=tf.nn.relu, name='relu1')
+  network = DropoutLayer(network, keep=0.5, name='drop2')
+  network = DenseLayer(network, n_units=800, act=tf.nn.relu, name='relu2')
+  network = DropoutLayer(network, keep=0.5, name='drop3')
+  network = DenseLayer(network, n_units=10, act=tf.identity, name='output')
 
 The network parameters will be ``[W1, b1, W2, b2, W_out, b_out]``,
 then you can apply L2 regularization on the weights matrix of first two layer as follow.
@@ -52,7 +52,7 @@ observed by using ``network.print_params()``.
 
 .. code-block:: python
 
-  sess.run(tf.initialize_all_variables())
+  tl.layers.initialize_global_variables(sess)
   network.print_params()
 
 .. code-block:: text
@@ -117,8 +117,10 @@ to the cost function.
 .. autosummary::
 
    cross_entropy
+   sigmoid_cross_entropy
    binary_cross_entropy
    mean_squared_error
+   normalized_mean_square_error
    dice_coe
    dice_hard_coe
    iou_coe
@@ -132,9 +134,13 @@ to the cost function.
    maxnorm_i_regularizer
 
 
-Cross entropy
-------------------
+Softmax cross entropy
+----------------------
 .. autofunction:: cross_entropy
+
+Sigmoid cross entropy
+----------------------
+.. autofunction:: sigmoid_cross_entropy
 
 Binary cross entropy
 -------------------------
@@ -143,6 +149,10 @@ Binary cross entropy
 Mean squared error
 -------------------------
 .. autofunction:: mean_squared_error
+
+Normalized mean square error
+--------------------------------
+.. autofunction:: normalized_mean_square_error
 
 Dice coefficient
 -------------------------

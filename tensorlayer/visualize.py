@@ -2,12 +2,95 @@
 # -*- coding: utf8 -*-
 
 
+import matplotlib
+
+## use this, if you got the following error:
+#  _tkinter.TclError: no display name and no $DISPLAY environment variable
+
+# matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+from . import prepro
 
 
+## Save images
+import scipy.misc
+
+def read_image(image, path=''):
+    """ Read one image.
+
+    Parameters
+    -----------
+    images : string, file name.
+    path : string, path.
+    """
+    return scipy.misc.imread(os.path.join(path, image))
+
+def read_images(img_list, path='', n_threads=10, printable=True):
+    """ Returns all images in list by given path and name of each image file.
+
+    Parameters
+    -------------
+    img_list : list of string, the image file names.
+    path : string, image folder path.
+    n_threads : int, number of thread to read image.
+    printable : bool, print infomation when reading images, default is True.
+    """
+    imgs = []
+    for idx in range(0, len(img_list), n_threads):
+        b_imgs_list = img_list[idx : idx + n_threads]
+        b_imgs = prepro.threading_data(b_imgs_list, fn=read_image, path=path)
+        # print(b_imgs.shape)
+        imgs.extend(b_imgs)
+        if printable:
+            print('read %d from %s' % (len(imgs), path))
+    return imgs
+
+def save_image(image, image_path=''):
+    """Save one image.
+
+    Parameters
+    -----------
+    images : numpy array [w, h, c]
+    image_path : string.
+    """
+    try: # RGB
+        scipy.misc.imsave(image_path, image)
+    except: # Greyscale
+        scipy.misc.imsave(image_path, image[:,:,0])
+
+
+def save_images(images, size, image_path=''):
+    """Save mutiple images into one single image.
+
+    Parameters
+    -----------
+    images : numpy array [batch, w, h, c]
+    size : list of two int, row and column number.
+        number of images should be equal or less than size[0] * size[1]
+    image_path : string.
+
+    Examples
+    ---------
+    >>> images = np.random.rand(64, 100, 100, 3)
+    >>> tl.visualize.save_images(images, [8, 8], 'temp.png')
+    """
+    def merge(images, size):
+        h, w = images.shape[1], images.shape[2]
+        img = np.zeros((h * size[0], w * size[1], 3))
+        for idx, image in enumerate(images):
+            i = idx % size[1]
+            j = idx // size[1]
+            img[j*h:j*h+h, i*w:i*w+w, :] = image
+        return img
+
+    def imsave(images, size, path):
+        return scipy.misc.imsave(path, merge(images, size))
+
+    assert len(images) <= size[0] * size[1], "number of images should be equal or less than size[0] * size[1] {}".format(len(images))
+    return imsave(images, size, image_path)
 
 def W(W=None, second=10, saveable=True, shape=[28,28], name='mnist', fig_idx=2396512):
     """Visualize every columns of the weight matrix to a group of Greyscale img.
